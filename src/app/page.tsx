@@ -49,7 +49,6 @@ export default function CarWashWebsite() {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [showBookingForm, setShowBookingForm] = useState<boolean>(false);
-  const [currentTestimonial, setCurrentTestimonial] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
@@ -57,17 +56,21 @@ export default function CarWashWebsite() {
     time: ''
   });
 
-  // Testimonials
-  const testimonials: Testimonial[] = [
-    { name: 'Rahul Sharma', vehicle: 'Mahindra Thar', rating: 3, text: 'Amazing service for my Thar! The team made it look brand new. Best car cleaning in Delhi!', location: 'Delhi' },
-    { name: 'Priya Patel', vehicle: 'Maruti Swift', rating: 4, text: 'Very professional service. My Swift looks sparkling clean. Highly recommend!', location: 'Gurgaon' },
-    { name: 'Arjun Singh', vehicle: 'BMW 3 Series', rating: 4, text: 'Premium detailing for my BMW was exceptional. Worth every penny!', location: 'Noida' },
-    { name: 'Vikram Kumar', vehicle: 'Royal Enfield', rating: 4, text: 'Great bike cleaning service. My bike shines like new after their service.', location: 'Faridabad' },
-    { name: 'Anita Yadav', vehicle: 'Hyundai Creta', rating: 3, text: 'Excellent service in Patna. My Creta looks spotless, and the team was very professional.', location: 'Patna' },
-    { name: 'Ravi Kumar', vehicle: 'Hero Splendor', rating: 4, text: 'Quick and affordable bike wash in Chapra. Highly satisfied with the results!', location: 'Chapra' },
-    { name: 'Suman Singh', vehicle: 'Tata Nexon', rating: 4, text: 'Fantastic service in Siwan. My Nexon looks amazing after the premium wash.', location: 'Siwan' },
-    { name: 'Mohan Prasad', vehicle: 'Bajaj Pulsar', rating: 4, text: 'Best bike cleaning in Gopalganj. The team is skilled and uses eco-friendly products.', location: 'Gopalganj' },
-    { name: 'Rohit Sharma', vehicle: 'Mahindra Bolero', rating: 3, text: 'Great service for my Bolero! Looks brand new after the wash in Delhi.', location: 'Delhi' }
+  // Vehicles
+  const vehicles: Vehicle[] = [
+    { id: 1, name: 'Car', models: 'Maruti, Honda, Hyundai', image: '/clean.jpg', basePrice: 399 },
+    { id: 2, name: 'BMW', models: 'Luxury Sedan', image: '/bmw.jpg', basePrice: 999 },
+    { id: 3, name: 'Thar', models: 'Off-road SUV', image: '/thar1.jpg', basePrice: 800 },
+    { id: 4, name: 'Scorpio', models: 'SUV', image: '/scorpio1.jpg', basePrice: 799 },
+    { id: 5, name: 'Bolero', models: 'MUV', image: '/bolero.jpg', basePrice: 699 },
+    { id: 6, name: 'Bike', models: 'Two Wheeler', image: '/bike.jpg', basePrice: 350 }
+  ];
+
+  // Services
+  const services: Service[] = [
+    { id: 1, title: 'Basic Wash', duration: '10 minutes', multiplier: 1, features: ['Exterior body wash', 'Tire cleaning', 'Window cleaning', 'Water drying'] },
+    { id: 2, title: 'Deep Cleaning', duration: '15 minutes', multiplier: 1.5, features: ['Complete exterior wash', 'Interior vacuuming', 'Dashboard cleaning', 'Seat cleaning', 'Door panel cleaning'] },
+    { id: 3, title: 'Premium Detailing', duration: '30 minutes', multiplier: 2.5, features: ['Full exterior detailing', 'Complete interior detailing', 'Wax and polish', 'Engine bay cleaning', 'Leather treatment', 'UV protection coating'] }
   ];
 
   // Stats
@@ -87,38 +90,6 @@ export default function CarWashWebsite() {
     { title: 'Affordable Pricing', description: 'Best prices in Delhi NCR & Bihar' },
     { title: 'Quick Service', description: 'Fast and efficient cleaning' }
   ];
-
-  // Vehicles
-  const vehicles: Vehicle[] = [
-    { id: 1, name: 'Car', models: 'Maruti, Honda, Hyundai', image: '/clean.jpg', basePrice: 399 },
-    { id: 2, name: 'BMW', models: 'Luxury Sedan', image: '/bmw.jpg', basePrice: 999 },
-    { id: 3, name: 'Thar', models: 'Off-road SUV', image: '/thar1.jpg', basePrice: 800 },
-    { id: 4, name: 'Scorpio', models: 'SUV', image: '/scorpio1.jpg', basePrice: 799 },
-    { id: 5, name: 'Bolero', models: 'MUV', image: '/bolero.jpg', basePrice: 699 },
-    { id: 6, name: 'Bike', models: 'Two Wheeler', image: '/bike.jpg', basePrice: 350 }
-  ];
-
-  // Services
-  const services: Service[] = [
-    { id: 1, title: 'Basic Wash', duration: '10 minutes', multiplier: 1, features: ['Exterior body wash', 'Tire cleaning', 'Window cleaning', 'Water drying'] },
-    { id: 2, title: 'Deep Cleaning', duration: '15 minutes', multiplier: 1.5, features: ['Complete exterior wash', 'Interior vacuuming', 'Dashboard cleaning', 'Seat cleaning', 'Door panel cleaning'] },
-    { id: 3, title: 'Premium Detailing', duration: '30 minutes', multiplier: 2.5, features: ['Full exterior detailing', 'Complete interior detailing', 'Wax and polish', 'Engine bay cleaning', 'Leather treatment', 'UV protection coating'] }
-  ];
-
-  // Auto testimonial slider
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial(prev => (prev + 1) % testimonials.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  // Scroll to top when booking form shows
-  useEffect(() => {
-    if (showBookingForm || selectedVehicle) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }, [showBookingForm, selectedVehicle]);
 
   // Calculate Price
   const calculatePrice = (vehicle: Vehicle | null, service: Service | null): number => {
@@ -168,6 +139,11 @@ Time: ${formData.time}`;
     }
   };
 
+  // Scroll to top when page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [selectedVehicle, showBookingForm]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
       {/* Header with Back Button */}
@@ -179,27 +155,29 @@ Time: ${formData.time}`;
         </div>
       )}
 
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-sky-800 to-slate-900 text-white py-16">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
-          <div className="md:w-2/2 relative h-98 md:h-[500px] animate-fadeIn">
-            <Image src="/man.jpg" alt="Car Wash Banner" fill className="object-cover rounded-lg shadow-2xl" />
-          </div>
-          <div className="md:w-1/2 text-center md:text-left animate-slideInRight">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">Sparkle & Shine Car Wash</h1>
-            <p className="text-lg md:text-xl text-gray-200 mb-6">Professional car and bike cleaning services at your doorstep.</p>
-            <button 
-              onClick={() => {
-                const sec = document.querySelector('#vehicles') as HTMLDivElement | null;
-                if (sec) window.scrollTo({ top: sec.offsetTop, behavior: 'smooth' });
-              }}
-              className="bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-            >
-              Book Your Wash Now
-            </button>
+      {/* Banner - only on landing page */}
+      {!selectedVehicle && !showBookingForm && (
+        <div className="bg-gradient-to-r from-sky-800 to-slate-900 text-white py-16">
+          <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8">
+            <div className="md:w-1/2 w-full relative h-64 md:h-[500px] animate-fadeIn">
+              <Image src="/man.jpg" alt="Car Wash Banner" fill className="object-cover rounded-lg shadow-2xl" />
+            </div>
+            <div className="md:w-1/2 text-center md:text-left animate-slideInRight">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Sparkle & Shine Car Wash</h1>
+              <p className="text-lg md:text-xl text-gray-200 mb-6">Professional car and bike cleaning services at your doorstep.</p>
+              <button 
+                onClick={() => {
+                  const sec = document.querySelector('#vehicles') as HTMLDivElement | null;
+                  if (sec) window.scrollTo({ top: sec.offsetTop, behavior: 'smooth' });
+                }}
+                className="bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-700 hover:to-blue-800 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
+              >
+                Book Your Wash Now
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main Content */}
       {!selectedVehicle ? (
