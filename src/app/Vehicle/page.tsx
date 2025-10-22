@@ -11,7 +11,7 @@ const washServices = [
     description: 'Deep cleaning for off-road SUVs, including exterior foam wash, interior vacuuming, and tire shine.',
     image: '/thar1.jpg',
     price: '₹900',
-    duration: '45 min'
+    duration: '15 min'
   },
   {
     id: 2,
@@ -159,9 +159,7 @@ export default function CarWashServicesPage() {
                   <span className="text-2xl font-bold text-green-400">{service.price}</span>
                   <span className="text-gray-300">{service.duration}</span>
                 </div>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-600 hover:from-blue-600 hover:to-cyan-700 text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
-                  Book Now
-                </button>
+               
               </div>
             </div>
           ))}
