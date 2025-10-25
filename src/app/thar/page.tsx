@@ -3,7 +3,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Check } from "lucide-react";
 
-// -------------------- Types --------------------
+
 interface Package {
   id: number;
   name: string;
