@@ -6,7 +6,7 @@ export default function BasicWashPage() {
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  // ✅ Typed FormData Interface
+
   interface FormData {
     name: string;
     phone: string;
