@@ -2,8 +2,6 @@
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { Check } from "lucide-react";
-
-// -------------------- Types --------------------
 interface Package {
   id: number;
   name: string;
@@ -36,7 +34,7 @@ const Bike: React.FC = () => {
     { id: 3, name: "Premium Detailing", price: 1999, features: ["Complete detailing", "Engine bay cleaning", "Ceramic coat"] },
   ];
 
-  // -------------------- Handlers --------------------
+  
   const handlePackageSelect = (pkgId: number) => {
     setSelectedPackage(pkgId);
   };
