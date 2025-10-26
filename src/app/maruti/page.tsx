@@ -4,7 +4,7 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import {Check } from "lucide-react";
 
 interface Package {
-  id: number;
+  id: : number;
   name: string;
   price: number;
   features: string[];
