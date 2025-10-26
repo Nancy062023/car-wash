@@ -238,7 +238,7 @@ Time: ${formData.time}`;
             </div>
           </div>
 
-          {/* Vehicles */}
+        
           <div id="vehicles" className="container mx-auto px-4 py-16">
             <h3 className="text-3xl font-bold text-center text-slate-800 mb-12 animate-fadeIn">Select Your Vehicle</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
